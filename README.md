@@ -58,44 +58,170 @@ restaurante/
 
 ## Instalación
 
-### 1. Configurar el Servidor Web
+### Opción 1: Usando Docker (Recomendado)
 
-Asegúrate de tener un servidor web con PHP y MySQL instalados. Puedes usar:
-- XAMPP (Windows/Linux/Mac)
-- WAMP (Windows)
-- MAMP (Mac)
-- Servidor local de desarrollo
+#### Prerrequisitos para macOS
+- **Docker Desktop para Mac**: Descarga e instala desde [docker.com](https://www.docker.com/products/docker-desktop)
+- **Git** (opcional, para clonar el repositorio): Instala con Homebrew: `brew install git`
+- **Homebrew** (recomendado): Para gestionar paquetes en macOS
 
-### 2. Clonar/Descargar el Proyecto
+#### Instalación de Docker Desktop en macOS
 
-1. Descarga o clona este proyecto en tu carpeta de servidor web
-2. Navega a la carpeta del proyecto
+1. **Descargar Docker Desktop**
+   - Ve a [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+   - Haz clic en "Download for Mac"
+   - Selecciona la versión apropiada:
+     - **Apple Silicon (M1/M2)**: Docker Desktop for Mac with Apple Silicon
+     - **Intel Chip**: Docker Desktop for Mac with Intel Chip
 
-### 3. Configurar la Base de Datos
+2. **Instalar Docker Desktop**
+   - Abre el archivo `.dmg` descargado
+   - Arrastra Docker.app a la carpeta Applications
+   - Abre Docker Desktop desde Applications
+   - Sigue las instrucciones de instalación
+   - Inicia sesión con tu cuenta de Docker (opcional, pero recomendado)
 
-1. Abre phpMyAdmin o tu cliente MySQL preferido
-2. Crea una nueva base de datos llamada `restaurante_db`
-3. Importa el archivo `database/restaurante_db.sql`
-4. Verifica que las tablas se hayan creado correctamente:
-   - `menus` - Contiene los menús del restaurante
-   - `pedidos` - Contiene los pedidos de los clientes
+3. **Verificar la instalación**
+   ```bash
+   # Abre Terminal y ejecuta:
+   docker --version
+   docker-compose --version
+   ```
 
-### 4. Configurar la Conexión a la Base de Datos
+#### Pasos para ejecutar con Docker en macOS
 
-Edita el archivo `includes/db_connection.php` y actualiza las credenciales:
+1. **Clonar/Descargar el Proyecto**
+   ```bash
+   git clone <url-del-repositorio>
+   cd restaurant-101
+   ```
 
-```php
-$host = 'localhost';        // Host de la base de datos
-$dbname = 'restaurante_db'; // Nombre de la base de datos
-$username = 'restaurante';         // Usuario de MySQL
-$password = 'restaurante_secret';  // Contraseña de MySQL
+2. **Configurar Variables de Entorno (Opcional)**
+   
+   Puedes crear un archivo `.env` en la raíz del proyecto:
+   ```bash
+   # En Terminal, desde la carpeta del proyecto:
+   touch .env
+   ```
+   
+   Luego edita el archivo `.env` con tu editor preferido:
+   ```env
+   BD_HOST=mysql_db
+   DB_NAME=restaurante_db
+   DB_USER_NAME=restaurante
+   DB_PASSWORD=restaurante_secret
+   ```
+
+3. **Ejecutar con Docker Compose**
+   ```bash
+   # Construir y levantar los contenedores
+   docker-compose up -d
+   
+   # Para ver los logs en tiempo real
+   docker-compose logs -f
+   ```
+
+4. **Acceder a la Aplicación**
+   - Abre Safari, Chrome, o Firefox
+   - Ve a `http://localhost`
+   - La aplicación estará disponible en el puerto 80
+
+5. **Comandos útiles de Docker para macOS**
+   ```bash
+   # Detener los contenedores
+   docker compose down
+   
+   # Reconstruir los contenedores (si hay cambios)
+   docker compose build --no-cache
+   docker compose up -d
+   
+   # Ver logs de un servicio específico
+   docker compose logs nginx
+   docker compose logs php
+   docker compose logs db
+   
+   # Acceder al contenedor de la base de datos
+   docker exec -it mysql_db mysql -u root -proot-secret
+   
+   # Ver contenedores en ejecución
+   docker ps
+   
+   # Ver uso de recursos de Docker
+   docker stats
+   ```
+
+#### Solución de problemas comunes en macOS
+
+**Docker Desktop no inicia:**
+- Verifica que tienes permisos de administrador
+- Reinicia Docker Desktop desde Applications
+- Si persiste, reinicia tu Mac
+
+**Puerto 80 ocupado:**
+```bash
+# Verificar qué está usando el puerto 80
+sudo lsof -i :80
+
+# Si es necesario, cambiar el puerto en docker-compose.yml
+# Cambia "80:80" por "8080:80" y accede a http://localhost:8080
 ```
 
-### 5. Acceder a la Aplicación
+**Problemas de permisos:**
+```bash
+# Si tienes problemas con permisos de archivos
+chmod +x docker-compose.yml
+```
 
-1. Abre tu navegador web
-2. Navega a `http://localhost/restaurante/` (ajusta la ruta según tu configuración)
-3. Deberías ver la página principal del restaurante
+**Docker Desktop lento:**
+- Aumenta la memoria asignada en Docker Desktop > Preferences > Resources
+- Recomendado: 4GB RAM mínimo, 8GB preferido
+
+#### Estructura de Contenedores
+- **nginx**: Servidor web (puerto 80)
+- **php**: Servidor PHP-FPM (puerto 9000)
+- **db**: Base de datos MySQL (puerto interno)
+
+---
+
+### Opción 2: Instalación Local Tradicional
+
+#### Prerrequisitos
+- Servidor web con PHP y MySQL instalados. Puedes usar:
+  - XAMPP (Windows/Linux/Mac)
+  - WAMP (Windows)
+  - MAMP (Mac)
+  - Servidor local de desarrollo
+
+#### Pasos
+
+1. **Clonar/Descargar el Proyecto**
+   ```bash
+   git clone <url-del-repositorio>
+   cd restaurante
+   ```
+
+2. **Configurar la Base de Datos**
+   - Abre phpMyAdmin o tu cliente MySQL preferido
+   - Crea una nueva base de datos llamada `restaurante_db`
+   - Importa el archivo `database/restaurante_db.sql`
+   - Verifica que las tablas se hayan creado correctamente:
+     - `menus` - Contiene los menús del restaurante
+     - `pedidos` - Contiene los pedidos de los clientes
+
+3. **Configurar la Conexión a la Base de Datos**
+   
+   Edita el archivo `includes/db_connection.php` y actualiza las credenciales:
+   ```php
+   $host = 'localhost' or 'mysql_db' si usas docker;        // Host de la base de datos
+   $dbname = 'restaurante_db'; // Nombre de la base de datos
+   $username = 'restaurante';         // Usuario de MySQL
+   $password = 'restaurante_secret';  // Contraseña de MySQL
+   ```
+
+4. **Acceder a la Aplicación**
+   - Abre tu navegador web
+   - Navega a `http://localhost/restaurante/` (ajusta la ruta según tu configuración)
+   - Deberías ver la página principal del restaurante
 
 ## Uso de la Aplicación
 
