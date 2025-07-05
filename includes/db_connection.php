@@ -1,6 +1,6 @@
 <?php
 // Configuración de la base de datos
-$host = getenv('BD_HOST') ?: 'mysql_db';
+$host = getenv('DB_HOST') ?: 'mysql_db';
 $dbname = getenv('DB_NAME') ?: 'restaurante_db';
 $username = getenv('DB_USER_NAME') ?: 'restaurante';
 $password = getenv('DB_PASSWORD') ?: 'restaurante_secret';

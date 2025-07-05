@@ -194,14 +194,14 @@ if ($result->num_rows > 0) {
                                             <td>
                                                 <button class="btn btn-sm btn-outline-primary" 
                                                         data-bs-toggle="modal" 
-                                                        data-bs-target="#updateModal<?php echo $pedido['id']; ?>">
+                                                        data-bs-target="#updateModal-<?php echo $pedido['id']; ?>">
                                                     <i class="fas fa-edit"></i> Cambiar Estado
                                                 </button>
                                             </td>
                                         </tr>
                                         
                                         <!-- Modal para cambiar estado -->
-                                        <div class="modal fade" id="updateModal<?php echo $pedido['id']; ?>" tabindex="-1">
+                                        <div class="modal fade" id="updateModal-<?php echo $pedido['id']; ?>" tabindex="-1">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">

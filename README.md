@@ -106,7 +106,7 @@ restaurante/
    
    Luego edita el archivo `.env` con tu editor preferido:
    ```env
-   BD_HOST=mysql_db
+   DB_HOST=mysql_db
    DB_NAME=restaurante_db
    DB_USER_NAME=restaurante
    DB_PASSWORD=restaurante_secret

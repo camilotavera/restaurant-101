@@ -4,7 +4,7 @@ session_start();
 
 // Configuración inicial
 $config = [
-    'host' => getenv('BD_HOST') ?: 'localhost',
+    'host' => getenv('DB_HOST') ?: 'localhost',
     'username' => getenv('DB_USER_NAME') ?: 'restaurante',
     'password' => getenv('DB_PASSWORD') ?: 'restaurante_secret',
     'database' => getenv('DB_NAME') ?: 'restaurante_db'

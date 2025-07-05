@@ -7,7 +7,7 @@ define('APP_URL', 'http://localhost/restaurante');
 // Configuración de la base de datos
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'restaurante_db');
-define('DB_USER', 'root');
+define('DB_USER', 'restaurante');
 define('DB_PASS', '');
 
 // Configuración de contacto
