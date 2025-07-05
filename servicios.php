@@ -1,4 +1,7 @@
 <?php
+// Set proper content type and encoding
+header('Content-Type: text/html; charset=UTF-8');
+
 // Incluir archivo de conexión a la base de datos
 include 'includes/db_connection.php';
 

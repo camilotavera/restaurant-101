@@ -180,7 +180,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="card border-0 shadow-sm text-center">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                    <img src="https://images.unsplash.com/photo-1659354213732-8cdec0a6fb47?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
                          class="card-img-top" alt="Gerente">
                     <div class="card-body">
                         <h5 class="card-title">María González</h5>
