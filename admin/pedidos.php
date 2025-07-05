@@ -194,43 +194,13 @@ if ($result->num_rows > 0) {
                                             <td>
                                                 <button class="btn btn-sm btn-outline-primary" 
                                                         data-bs-toggle="modal" 
-                                                        data-bs-target="#updateModal-<?php echo $pedido['id']; ?>">
+                                                        data-bs-target="#updateModal"
+                                                        data-id="<?php echo $pedido['id']; ?>"
+                                                        data-estado="<?php echo htmlspecialchars($pedido['estado']); ?>">
                                                     <i class="fas fa-edit"></i> Cambiar Estado
                                                 </button>
                                             </td>
                                         </tr>
-                                        
-                                        <!-- Modal para cambiar estado -->
-                                        <div class="modal fade" id="updateModal-<?php echo $pedido['id']; ?>" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Cambiar Estado del Pedido #<?php echo $pedido['id']; ?></h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <form method="POST">
-                                                        <div class="modal-body">
-                                                            <div class="mb-3">
-                                                                <label for="nuevo_estado" class="form-label">Nuevo Estado</label>
-                                                                <select class="form-select" id="nuevo_estado" name="nuevo_estado" required>
-                                                                    <option value="Pendiente" <?php echo $pedido['estado'] == 'Pendiente' ? 'selected' : ''; ?>>Pendiente</option>
-                                                                    <option value="En preparación" <?php echo $pedido['estado'] == 'En preparación' ? 'selected' : ''; ?>>En preparación</option>
-                                                                    <option value="Listo" <?php echo $pedido['estado'] == 'Listo' ? 'selected' : ''; ?>>Listo</option>
-                                                                    <option value="Entregado" <?php echo $pedido['estado'] == 'Entregado' ? 'selected' : ''; ?>>Entregado</option>
-                                                                </select>
-                                                            </div>
-                                                            <input type="hidden" name="pedido_id" value="<?php echo $pedido['id']; ?>">
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                            <button type="submit" name="update_status" class="btn btn-primary">
-                                                                <i class="fas fa-save me-1"></i>Actualizar
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -249,6 +219,56 @@ if ($result->num_rows > 0) {
         </div>
     </div>
 
+    <!-- Modal único fuera del loop -->
+    <div class="modal fade" id="updateModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle">Cambiar Estado del Pedido</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="pedido_id" id="modalPedidoId">
+                        <div class="mb-3">
+                            <label for="nuevo_estado" class="form-label">Nuevo Estado</label>
+                            <select class="form-select" id="modalNuevoEstado" name="nuevo_estado" required>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="En preparación">En preparación</option>
+                                <option value="Listo">Listo</option>
+                                <option value="Entregado">Entregado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" name="update_status" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Actualizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var updateModal = document.getElementById('updateModal');
+        updateModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var pedidoId = button.getAttribute('data-id');
+            var estado = button.getAttribute('data-estado');
+            // Actualiza el título y el input hidden
+            document.getElementById('modalTitle').textContent = 'Cambiar Estado del Pedido #' + pedidoId;
+            document.getElementById('modalPedidoId').value = pedidoId;
+            // Selecciona el estado actual
+            var select = document.getElementById('modalNuevoEstado');
+            for (var i = 0; i < select.options.length; i++) {
+                select.options[i].selected = (select.options[i].value === estado);
+            }
+        });
+    });
+    </script>
 </body>
 </html> 
