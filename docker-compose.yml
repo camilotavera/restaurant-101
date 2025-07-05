@@ -1,0 +1,25 @@
+services:
+  nginx:
+    build: ./nginx/
+    ports:
+      - 80:80
+
+    volumes:
+      - ./:/var/www/html/
+
+  php:
+    build: ./
+    expose:
+      - 9000
+    volumes:
+      - ./:/var/www/html/
+  db:
+    container_name: mysql_db
+    image: mysql:latest
+    volumes:
+      - ./database/restaurante_db.sql:/docker-entrypoint-initdb.d/restaurante_db.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root-secret
+      MYSQL_DATABASE: restaurante_db
+      MYSQL_USER: restaurante
+      MYSQL_PASSWORD: restaurante_secret

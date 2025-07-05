@@ -1,9 +1,9 @@
 <?php
 // Configuración de la base de datos
-$host = 'localhost';
-$dbname = 'restaurante_db';
-$username = 'root';
-$password = '';
+$host = getenv('BD_HOST') ?: 'mysql_db';
+$dbname = getenv('DB_NAME') ?: 'restaurante_db';
+$username = getenv('DB_USER_NAME') ?: 'restaurante';
+$password = getenv('DB_PASSWORD') ?: 'restaurante_secret';
 
 // Crear conexión
 $conn = new mysqli($host, $username, $password, $dbname);

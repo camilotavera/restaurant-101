@@ -87,8 +87,8 @@ Edita el archivo `includes/db_connection.php` y actualiza las credenciales:
 ```php
 $host = 'localhost';        // Host de la base de datos
 $dbname = 'restaurante_db'; // Nombre de la base de datos
-$username = 'root';         // Usuario de MySQL
-$password = '';             // Contraseña de MySQL
+$username = 'restaurante';         // Usuario de MySQL
+$password = 'restaurante_secret';  // Contraseña de MySQL
 ```
 
 ### 5. Acceder a la Aplicación
